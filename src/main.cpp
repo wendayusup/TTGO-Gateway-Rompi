@@ -11,6 +11,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>              // include libraries
 #include <LoRa.h>
+#include <axp20x.h>
 #include <TinyGPS++.h>
 
 #define SS   18          // LoRa radio chip select
@@ -153,7 +154,7 @@ void loop() {
     }
       if (Destination == localAddress) {
       
-      // Destination++;Serial.println(String() + ID + "," + LAT + "," + LON + "," + SOG + "," + COG + "," + RSI + "," + SNR + ",*");
+      Destination++;Serial.println(String() + ID + "," + LAT + "," + LON + "," + SOG + "," + COG + "," + RSI + "," + SNR + ",*");
     } else if (Destination == 1) {
       String message = "REQ,*";   // send a message
       sendMessage(message);
@@ -169,12 +170,16 @@ void loop() {
     while (GPS.available()) {
       gps.encode(GPS.read());
       onReceive(LoRa.parsePacket());
+      // onReceive02(LoRa.parsePacket());
     }
 
   } 
 
      onReceive(LoRa.parsePacket());
-
+  //    Serial.println("\n");
+  //   // myTime = millis();
+  //   // Serial.println(myTime);
+  // delay(50);
 }
 
  
